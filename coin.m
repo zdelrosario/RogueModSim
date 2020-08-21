@@ -2,7 +2,7 @@ function res = coin(p)
 % coin Return 1 or 0 with a given probability
 %
 % Usage
-%   res = flip(p)
+%   res = coin(p)
 %
 % Arguments
 %   p = probability of returning the value 1; 

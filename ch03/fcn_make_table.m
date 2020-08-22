@@ -21,18 +21,20 @@ function t = fcn_make_table(varargin)
 t = table();
 
 % Parse the argument pairs
-if (nargin > 0) && (mod(nargin, 2) == 0)
-    for i = 1 : nargin / 2
-        ind = (i - 1) * 2 + 1;
-        if isa(varargin{ind}, "string")
-        % Add property
-            t.(varargin{ind}) = varargin{ind + 1};
-        elseif ~isempty(last_param)
-            error("`var` arguments must be strings")
+if (nargin > 0) 
+    if (mod(nargin, 2) == 0)
+        for i = 1 : nargin / 2
+            ind = (i - 1) * 2 + 1;
+            if isa(varargin{ind}, "string")
+            % Add property
+                t.(varargin{ind}) = varargin{ind + 1};
+            elseif ~isempty(last_param)
+                error("`var` arguments must be strings")
+            end
         end
+    else
+        error("Must provide arguments in `var, value` pairs")
     end
-else
-    error("Must provide arguments in `var, value` pairs")
 end
 
 end

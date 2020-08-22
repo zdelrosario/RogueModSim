@@ -1,4 +1,4 @@
-function t = make_table(varargin)
+function t = fcn_make_table(varargin)
 % make_table Create a table object
 % 
 % Usage

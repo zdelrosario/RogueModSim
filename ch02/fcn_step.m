@@ -1,4 +1,4 @@
-function state = step(state, p_o2w, p_w2o)
+function tab_state = fcn_step(tab_state, p_o2w, p_w2o)
 % step Advance an Olin-Wellesley bikeshare system one timestep
 % 
 % Usage
@@ -14,11 +14,11 @@ function state = step(state, p_o2w, p_w2o)
 %   step(bikeshare)
 
 if coin(p_o2w)
-    state = bike_olin_to_wellesley(state);
+    tab_state = fcn_olin2wellesley(tab_state);
 end
 
 if coin(p_w2o)
-    state = bike_wellesley_to_olin(state);
+    tab_state = fcn_wellesley2olin(tab_state);
 end
 
 end

@@ -21,5 +21,10 @@ recovered = tab_system.gamma * tab_state.i;
 tab_state.s = tab_state.s - infected;
 tab_state.i = tab_state.i + infected - recovered;
 tab_state.r = tab_state.r + recovered;
+
+% Enforce invariants; necessary since we're doing a discrete approx.
+tab_state.s = max(tab_state.s, 0);
+tab_state.i = max(tab_state.i, 0);
+tab_state.r = max(tab_state.r, 0);
     
 end

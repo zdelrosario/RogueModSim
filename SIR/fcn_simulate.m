@@ -14,9 +14,11 @@ function tab_record = fcn_simulate(tab_state, tab_system, num_steps)
 %   tab_record = record of simulation state at each timestep
 
 tab_record = tab_state;
+tab_record.week = 0;
 
 for i = 1 : num_steps
     tab_state = fcn_step(tab_state, tab_system);
+    tab_state.week = i;
     tab_record = [tab_record; tab_state];
 end
 

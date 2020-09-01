@@ -1,25 +1,48 @@
-function tab_record = fcn_simulate(tab_state, tab_system, num_steps)
+function [S, I, R, W] = fcn_simulate(s_0, i_0, r_0, beta, gamma, epsilon, num_steps)
 % fcn_simulate Simulate a SIR model
 %
 % Usage
-%   tab_record = fcn_simulate(tab_state, tab_system, num_steps)
+%   [S, I, R, W] = fcn_simulate(s_0, i_0, r_0, beta, gamma, epsilon, num_steps)
 %
 % Arguments
-%   tab_state = current state of SIR system, must have [s, i, r] attributes
-%   tab_system = system parameters, must have [beta, gamma] attributes
-%                beta = infection rate
-%                gamma = recovery rate
+%   s_0 = initial number of susceptible individuals
+%   i_0 = initial number of infected individuals
+%   r_0 = initial number of recovered individuals
+
+%   beta = infection rate parameter
+%   gamma = recovery rate paramter
+%   epsilon = decay rate parameter
+%
+%   num_steps = number of simulation steps to simulate
 %
 % Returns
-%   tab_record = record of simulation state at each timestep
+%   S = simulation history of susceptible individuals; vector
+%   I = simulation history of infected individuals; vector
+%   R = simulation history of recovered individuals; vector
+%   W = simulation week; vector
+%
 
-tab_record = tab_state;
-tab_record.week = 0;
+% Setup
+S = zeros(1, num_steps);
+I = zeros(1, num_steps);
+R = zeros(1, num_steps);
+W = 1 : num_steps;
 
-for i = 1 : num_steps
-    tab_state = fcn_step(tab_state, tab_system);
-    tab_state.week = i;
-    tab_record = [tab_record; tab_state];
+s = s_0;
+i = i_0;
+r = r_0;
+
+% Store initial values
+S(1) = s;
+I(1) = i;
+R(1) = r;
+
+% Run simulation
+for step = 2 : num_steps
+    [s, i, r] = fcn_step(s, i, r, beta, gamma, epsilon);
+    S(step) = s;
+    I(step) = i;
+    R(step) = r;
 end
 
 end

@@ -1,32 +1,34 @@
-function tab_state = fcn_step(tab_state, tab_system)
+function [s_n, i_n, r_n] = fcn_step(s, i, r, beta, gamma, epsilon)
 % fcn_step Advance an SIR model one timestep
 %
 % Usage
-%   tab_state = fcn_step(tab_state, tab_system)
+%   [s_n, i_n, r_n] = fcn_step(s, i, r, beta, gamma, epsilon)
 % 
 % Arguments
-%   tab_state = current state of SIR system, but have [s, i, r] attributes
-%   tab_system = system parameters, must have [beta, gamma, epsilon] attributes
-%                beta = infection rate
-%                gamma = recovery rate
-%                epsilon = immunity decay period
+%   s = current number of susceptible individuals
+%   i = current number of infected individuals
+%   r = current number of recovered individuals
+%   
+%   beta = infection rate parameter
+%   gamma = recovery rate paramter
+%   epsilon = decay rate parameter
 % 
 % Returns
 %   tab_state = updated state
 
 % compute new infections and recoveries
-infected = tab_system.beta * tab_state.i * tab_state.s;
-recovered = tab_system.gamma * tab_state.i;
-decayed = tab_system.epsilon * tab_state.r;
+infected = beta * i * s;
+recovered = gamma * i;
+decayed = epsilon * r;
     
 % Update state
-tab_state.s = tab_state.s - infected + decayed;
-tab_state.i = tab_state.i + infected - recovered;
-tab_state.r = tab_state.r + recovered - decayed;
+s_n = s - infected + decayed;
+i_n = i + infected - recovered;
+r_n = r + recovered - decayed;
 
 % Enforce invariants; necessary since we're doing a discrete approx.
-tab_state.s = max(tab_state.s, 0);
-tab_state.i = max(tab_state.i, 0);
-tab_state.r = max(tab_state.r, 0);
+s_n = max(s_n, 0);
+i_n = max(i_n, 0);
+r_n = max(r_n, 0);
     
 end
